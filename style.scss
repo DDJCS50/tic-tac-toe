@@ -158,12 +158,15 @@ footer {
 	justify-content: center;
 	align-items: center;
 	background-color: #e2e8f0;
-	padding: 24px;
+	padding: 0;
 	box-shadow: 6px 7px 10px -5px gray;
     flex: 1;
 	aspect-ratio: 1 / 1;
 	> p {
 		font-size: 8rem;
 		font-weight: bolder;
+		width: 100%;
+		text-align: center;
+		padding: 36px;
 	}
 }
