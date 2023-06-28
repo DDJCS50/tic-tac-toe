@@ -106,6 +106,25 @@ const gameBoardState = (function() {
                 };
             };
         });
+
+        
+        if (boardColumns[0][0] == boardColumns[1][1] && boardColumns[0][0] == boardColumns[2][2]) {
+            if (boardColumns[0][0] == 'X') {
+                alert(`${playerOne.name} Wins!`);
+                return;
+            } else if (boardColumns[0] == 'O') {
+                alert(`${playerTwo.name} Wins!`);
+                return;
+            };
+        } else if (boardColumns[2][0] == boardColumns[1][1] && boardColumns[2][0] == boardColumns[0][2]) {
+            if (boardColumns[2][0] == 'X') {
+                alert(`${playerOne.name} Wins!`);
+                return;
+            } else if (boardColumns[0] == 'O') {
+                alert(`${playerTwo.name} Wins!`);
+                return;
+            };
+        };
     };
 
 
