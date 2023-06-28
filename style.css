@@ -137,7 +137,7 @@ footer {
 #cardBox {
   display: flex;
   flex-wrap: nowrap;
-  gap: 4px;
+  gap: 0;
   padding: 24px;
   overflow: auto;
   height: 100%;
@@ -149,7 +149,7 @@ footer {
 }
 #cardBox > div {
   display: flex;
-  gap: 4px;
+  gap: 0;
   flex-direction: column;
   width: 300px;
   flex-grow: 0;
@@ -168,6 +168,7 @@ footer {
   box-shadow: 6px 7px 10px -5px gray;
   flex: 1;
   aspect-ratio: 1/1;
+  border: 2px solid black;
 }
 .card > p {
   font-size: 8rem;
@@ -175,4 +176,5 @@ footer {
   width: 100%;
   text-align: center;
   padding: 36px;
+  padding-bottom: 24px;
 }

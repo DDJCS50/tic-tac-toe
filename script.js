@@ -63,8 +63,49 @@ const gameBoardState = (function() {
         while (createGameBoard.gameBoard.length > 0) {
             newBoardColumns.push(createGameBoard.gameBoard.splice(0, size));
         };
+
+        let newBoardRowsFlat = [];
+        let newBoardRows = [];
+        for (let j = 0; j < 3; j++) {
+            for (let k = 0; k < 3; k++) {
+                newBoardRowsFlat.push(newBoardColumns[k][j]);
+            };
+        };
+
+        while (newBoardRowsFlat.length > 0) {
+            newBoardRows.push(newBoardRowsFlat.splice(0, size));
+        };
+
+        checkWinner(newBoardColumns, newBoardRows);
         console.log(newBoardColumns);
+        console.log(newBoardRows);
         console.log(createGameBoard.gameBoard);
+    };
+
+    const checkWinner = (boardColumns, boardRows) => {
+        boardColumns.forEach(function(column, index) {
+            if (column[0] == column[1] && column[0] == column[2]) {
+                if (column[0] == 'X') {
+                    alert(`${playerOne.name} Wins!`);
+                    return;
+                } else if (column[0] == 'O') {
+                    alert(`${playerTwo.name} Wins!`);
+                    return;
+                };
+            };
+        });
+
+        boardRows.forEach(function(row, index) {
+            if (row[0] == row[1] && row[0] == row[2]) {
+                if (row[0] == 'X') {
+                    alert(`${playerOne.name} Wins!`);
+                    return;
+                } else if (row[0] == 'O') {
+                    alert(`${playerTwo.name} Wins!`);
+                    return;
+                };
+            };
+        });
     };
 
 
