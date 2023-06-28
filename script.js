@@ -36,7 +36,7 @@ const renderGameBoard = (function() {
                     playerTwo.isMyTurn = false;
                 }
                 gameBoardState.updateBoard();
-            } else if (elem.firstElementChild.innerText != 'X' || elem.firstElementChild.innerText != 'O') {
+            } else if (elem.firstElementChild.innerText != 'X' && elem.firstElementChild.innerText != 'O') {
                 elem.firstElementChild.innerText = '';
             }
         });
@@ -58,7 +58,6 @@ const gameBoardState = (function() {
                 mark = '';
             };
         };
-        console.log(createGameBoard.gameBoard);
     };
 
     return {updateBoard};
