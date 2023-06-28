@@ -58,7 +58,15 @@ const gameBoardState = (function() {
                 mark = '';
             };
         };
+        let newBoardColumns = [], size = 3;
+        
+        while (createGameBoard.gameBoard.length > 0) {
+            newBoardColumns.push(createGameBoard.gameBoard.splice(0, size));
+        };
+        console.log(newBoardColumns);
+        console.log(createGameBoard.gameBoard);
     };
+
 
     return {updateBoard};
 
