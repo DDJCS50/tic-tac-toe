@@ -1,9 +1,9 @@
 const createGameBoard = (function() {
 
     let gameBoard = [
-        ['O', 'O', 'O'],
-        ['O', 'O', 'O'],
-        ['O', 'O', 'O']
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', '']
     ];
 
     return {gameBoard};
@@ -43,6 +43,7 @@ const renderGameBoard = (function() {
     });
 
     playerOne.isMyTurn = true;
+    return {elements};
 
 })();
 
@@ -83,13 +84,19 @@ const gameBoardState = (function() {
     };
 
     const checkWinner = (boardColumns, boardRows) => {
+        let winnerExists = false;
+
         boardColumns.forEach(function(column, index) {
             if (column[0] == column[1] && column[0] == column[2]) {
                 if (column[0] == 'X') {
                     alert(`${playerOne.name} Wins!`);
+                    winnerExists = true;
+                    endGame();
                     return;
                 } else if (column[0] == 'O') {
                     alert(`${playerTwo.name} Wins!`);
+                    winnerExists = true;
+                    endGame();
                     return;
                 };
             };
@@ -99,9 +106,13 @@ const gameBoardState = (function() {
             if (row[0] == row[1] && row[0] == row[2]) {
                 if (row[0] == 'X') {
                     alert(`${playerOne.name} Wins!`);
+                    winnerExists = true;
+                    endGame();
                     return;
                 } else if (row[0] == 'O') {
                     alert(`${playerTwo.name} Wins!`);
+                    winnerExists = true;
+                    endGame();
                     return;
                 };
             };
@@ -111,20 +122,57 @@ const gameBoardState = (function() {
         if (boardColumns[0][0] == boardColumns[1][1] && boardColumns[0][0] == boardColumns[2][2]) {
             if (boardColumns[0][0] == 'X') {
                 alert(`${playerOne.name} Wins!`);
+                winnerExists = true;
+                endGame();
                 return;
             } else if (boardColumns[0] == 'O') {
                 alert(`${playerTwo.name} Wins!`);
+                winnerExists = true;
+                endGame();
                 return;
             };
         } else if (boardColumns[2][0] == boardColumns[1][1] && boardColumns[2][0] == boardColumns[0][2]) {
             if (boardColumns[2][0] == 'X') {
                 alert(`${playerOne.name} Wins!`);
+                winnerExists = true;
+                endGame();
                 return;
             } else if (boardColumns[0] == 'O') {
                 alert(`${playerTwo.name} Wins!`);
+                winnerExists = true;
+                endGame();
                 return;
             };
         };
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (boardColumns[i][j] == '') {
+                    return;
+                } else if (i * j == 4 && winnerExists == false) {
+                    alert('It\'s a Tie!');
+                    endGame();
+                } else if (boardColumns[i][j] == 'X' || boardColumns[i][j] == 'O') {
+                    continue;
+                }
+            };
+        };
+    };
+
+    const endGame = () => {
+        createGameBoard.gameBoard = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', '']
+        ];
+
+        renderGameBoard.elements.forEach(function(elem, index) {
+            elem.firstElementChild.innerText = '';
+        });
+
+        playerOne.isMyTurn = true;
+        playerTwo.isMyTurn = false;
+        winnerExists = false;
     };
 
 
