@@ -136,6 +136,9 @@ const gameBoardState = (function() {
         let winnerExists = false;
         let winnerDisplay = document.querySelector('#winnerDisplay');
 
+        if (playerOne.name == '') playerOne.name = 'Thor';
+        if (playerTwo.name == '') playerTwo.name = 'Loki';
+
         boardColumns.forEach(function(column, index) {
             if (column[0] == column[1] && column[0] == column[2]) {
                 if (column[0] == 'X') {
@@ -175,7 +178,7 @@ const gameBoardState = (function() {
                 winnerExists = true;
                 endGame();
                 return;
-            } else if (boardColumns[0] == 'O') {
+            } else if (boardColumns[0][0] == 'O') {
                 winnerDisplay.innerText = `${playerTwo.name} Wins!`;
                 winnerExists = true;
                 endGame();
@@ -187,7 +190,7 @@ const gameBoardState = (function() {
                 winnerExists = true;
                 endGame();
                 return;
-            } else if (boardColumns[0] == 'O') {
+            } else if (boardColumns[2][0] == 'O') {
                 winnerDisplay.innerText = `${playerTwo.name} Wins!`;
                 winnerExists = true;
                 endGame();
