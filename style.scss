@@ -92,6 +92,9 @@ header {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	> h1 {
+		font-size: 5rem;
+	}
 }
 
 #sidebar {
@@ -100,11 +103,38 @@ header {
 	margin: 0;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	justify-content: center;
 	align-items: center;
 	padding: 12px;
 	gap: 12px;
 	background-color: #cbd5e1;
+	> button {
+		border-radius: 8px;
+		font-weight: bold;
+		box-shadow: 6px 7px 10px -5px gray;
+		width: 150px;
+	}
+	> div {
+		input {
+			min-height: 1.75rem;
+			min-width: 13rem;
+			outline: none;
+			border: 1px solid lightgray;
+			border-radius: 4px;
+		}
+		input:focus {
+			border: 1px solid blue;
+			border-radius: 4px;
+			box-shadow: 0 8px 4px -4px lightgray, 0 -4px 4px -4px lightgray;
+		}
+	}
+	> p {
+		font-weight: bolder;
+	}
+	> p:last-child {
+		font-size: 2rem;
+	}
+
 }
 
 main {
@@ -159,7 +189,6 @@ footer {
 	align-items: center;
 	background-color: #e2e8f0;
 	padding: 0;
-	box-shadow: 6px 7px 10px -5px gray;
     flex: 1;
 	aspect-ratio: 1 / 1;
 	border: 2px solid black;

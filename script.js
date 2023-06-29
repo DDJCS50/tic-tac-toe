@@ -14,13 +14,62 @@ const playerFactory = (name, symbol) => {
     return {name, symbol, isMyTurn};
 };
 
-const playerOne = playerFactory('Thor', 'X');
-const playerTwo = playerFactory('Loki', 'O');
+const playerNames = (function() {
+    let playerOneName;
+    let playerTwoName;
+
+    const getNames = () => {
+        playerOne.name = document.querySelector('#playerOneName').value;
+        playerTwo.name = document.querySelector('#playerTwoName').value;
+        if (playerOne.name == '') playerOne.name = 'Thor';
+        if (playerTwo.name == '') playerTwo.name = 'Loki';
+    };
+
+    if (document.querySelector('#playerOneName').value == '') {
+        playerOneName = 'Thor'
+    } else {
+        playerOneName = document.querySelector('#playerOneName').value;
+    };
+
+    if (document.querySelector('#playerTwoName').value == '') {
+        playerTwoName = 'Loki'
+    } else {
+        playerTwoName = document.querySelector('#playerTwoName').value;
+    };
+
+    if (playerOneName == null) playerOneName = 'Thor';
+    if (playerTwoName == null) playerTwoName = 'Loki';
+
+    return {
+        playerOneName,
+        playerTwoName,
+        getNames
+    }
+
+})();
+
+let playerOne = playerFactory(playerNames.playerOneName, 'X');
+let playerTwo = playerFactory(playerNames.playerTwoName, 'O');
 
 
 
 const renderGameBoard = (function() {
     let elements = document.querySelectorAll('.card');
+
+    let resetGameBtn = document.querySelector('#resetGameBtn');
+    resetGameBtn.addEventListener('click', function(event) {
+        event.stopPropagation();
+        gameBoardState.endGame();
+    });
+
+    let startGameBtn = document.querySelector('#startGameBtn');
+    let playerNamesDisplay = document.querySelector('#playerNamesDisplay');
+    startGameBtn.addEventListener('click', function(event) {
+        event.stopPropagation();
+        playerNames.getNames();
+        playerNamesDisplay.innerText = `${playerOne.name} vs ${playerTwo.name}`;
+        document.querySelector('#winnerDisplay').innerText = '';
+    });
 
     elements.forEach(function(elem, index) {
         elem.id = index;
@@ -43,7 +92,10 @@ const renderGameBoard = (function() {
     });
 
     playerOne.isMyTurn = true;
-    return {elements};
+    return {
+        elements,
+        playerNamesDisplay
+    };
 
 })();
 
@@ -78,23 +130,21 @@ const gameBoardState = (function() {
         };
 
         checkWinner(newBoardColumns, newBoardRows);
-        console.log(newBoardColumns);
-        console.log(newBoardRows);
-        console.log(createGameBoard.gameBoard);
     };
 
     const checkWinner = (boardColumns, boardRows) => {
         let winnerExists = false;
+        let winnerDisplay = document.querySelector('#winnerDisplay');
 
         boardColumns.forEach(function(column, index) {
             if (column[0] == column[1] && column[0] == column[2]) {
                 if (column[0] == 'X') {
-                    alert(`${playerOne.name} Wins!`);
+                    winnerDisplay.innerText = `${playerOne.name} Wins!`;
                     winnerExists = true;
                     endGame();
                     return;
                 } else if (column[0] == 'O') {
-                    alert(`${playerTwo.name} Wins!`);
+                    winnerDisplay.innerText = `${playerTwo.name} Wins!`;
                     winnerExists = true;
                     endGame();
                     return;
@@ -105,12 +155,12 @@ const gameBoardState = (function() {
         boardRows.forEach(function(row, index) {
             if (row[0] == row[1] && row[0] == row[2]) {
                 if (row[0] == 'X') {
-                    alert(`${playerOne.name} Wins!`);
+                    winnerDisplay.innerText = `${playerOne.name} Wins!`;
                     winnerExists = true;
                     endGame();
                     return;
                 } else if (row[0] == 'O') {
-                    alert(`${playerTwo.name} Wins!`);
+                    winnerDisplay.innerText = `${playerTwo.name} Wins!`;
                     winnerExists = true;
                     endGame();
                     return;
@@ -121,24 +171,24 @@ const gameBoardState = (function() {
         
         if (boardColumns[0][0] == boardColumns[1][1] && boardColumns[0][0] == boardColumns[2][2]) {
             if (boardColumns[0][0] == 'X') {
-                alert(`${playerOne.name} Wins!`);
+                winnerDisplay.innerText = `${playerOne.name} Wins!`;
                 winnerExists = true;
                 endGame();
                 return;
             } else if (boardColumns[0] == 'O') {
-                alert(`${playerTwo.name} Wins!`);
+                winnerDisplay.innerText = `${playerTwo.name} Wins!`;
                 winnerExists = true;
                 endGame();
                 return;
             };
         } else if (boardColumns[2][0] == boardColumns[1][1] && boardColumns[2][0] == boardColumns[0][2]) {
             if (boardColumns[2][0] == 'X') {
-                alert(`${playerOne.name} Wins!`);
+                winnerDisplay.innerText = `${playerOne.name} Wins!`;
                 winnerExists = true;
                 endGame();
                 return;
             } else if (boardColumns[0] == 'O') {
-                alert(`${playerTwo.name} Wins!`);
+                winnerDisplay.innerText = `${playerTwo.name} Wins!`;
                 winnerExists = true;
                 endGame();
                 return;
@@ -150,7 +200,7 @@ const gameBoardState = (function() {
                 if (boardColumns[i][j] == '') {
                     return;
                 } else if (i * j == 4 && winnerExists == false) {
-                    alert('It\'s a Tie!');
+                    winnerDisplay.innerText = 'It\'s a Tie!';
                     endGame();
                 } else if (boardColumns[i][j] == 'X' || boardColumns[i][j] == 'O') {
                     continue;
@@ -173,9 +223,14 @@ const gameBoardState = (function() {
         playerOne.isMyTurn = true;
         playerTwo.isMyTurn = false;
         winnerExists = false;
+        playerOne.name = '';
+        playerTwo.name = '';
+        document.querySelector('#playerOneName').value = '';
+        document.querySelector('#playerTwoName').value = '';
+        renderGameBoard.playerNamesDisplay.innerText = 'Player vs Player';
     };
 
 
-    return {updateBoard};
+    return {updateBoard, endGame};
 
 })();
